@@ -1,5 +1,5 @@
 <?php
-
+require_once 'Models/Model.php';
 
 abstract class Controller
 {

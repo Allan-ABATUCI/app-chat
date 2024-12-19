@@ -7,28 +7,17 @@
         <div class="search-bar">
             <input type="text" placeholder="Rechercher un contact...">
         </div>
+        
         <ul class="contact-list">
+            <?php foreach($contacts as $c=>$row):?>
             <li class="contact-item">
                 <div class="contact-info">
-                    <div class="contact-name">BRADLEY</div>
-                    <div class="last-message">Message récent ici...</div>
+                    <div class="contact-name"><?php echo $row['username']??''?></div>
+                    <div class="last-message"><?php echo $row['lastmessage'][$c]['content']??'' ?></div>
                 </div>
-                <div class="timestamp">10:30</div>
+                <div class="timestamp"><?php echo $row['lastmessage'][$c]['created_at']??''?></div>
             </li>
-            <li class="contact-item">
-                <div class="contact-info">
-                    <div class="contact-name">MANEL</div>
-                    <div class="last-message">Message récent ici...</div>
-                </div>
-                <div class="timestamp">09:45</div>
-            </li>
-            <li class="contact-item">
-                <div class="contact-info">
-                    <div class="contact-name">ALLAN</div>
-                    <div class="last-message">Message récent ici...</div>
-                </div>
-                <div class="timestamp">08:15</div>
-            </li>
+            <?php endforeach;?>
         </ul>
     </div>
 </main>
