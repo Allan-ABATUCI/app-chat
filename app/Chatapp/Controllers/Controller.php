@@ -1,5 +1,5 @@
 <?php
-namespace Chatapp\Controllers;
+require_once 'Models/Model.php';
 
 abstract class Controller
 {
