@@ -3,16 +3,11 @@
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 
-require '/vendor/autoload.php';
 
 class ChatServer implements MessageComponentInterface
 {
     protected $clients; // Liste des connexions actives
     protected $userConnections = [];
-    /**
-     * Attribut statique qui contiendra l'unique instance de Model
-     */
-    private static $instance = null;
 
     public function __construct()
     {
