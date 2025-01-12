@@ -1,4 +1,9 @@
 {
+      "autoload": {
+        "psr-4": {
+            "Chatapp\\": "app/Chatapp"
+        }
+    },
     "require": {
         "cboden/ratchet": "^0.4.4"
     }

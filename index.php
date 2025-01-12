@@ -1,11 +1,11 @@
 <?php
+require_once 'app/start.php';
+require_once "app/Chatapp/Utils/functions.php";
 
-//Pour avoir la fonction e()
-require_once "Utils/functions.php";
 //Inclusion du modèle
-require_once "Models/Model.php";
+use Chatapp\Models;
 //Inclusion de la classe Controller
-require_once "Controllers/Controller.php";
+use Chatapp\Controllers\Controller;
 
 //Liste des contrôleurs -- A RENSEIGNER
 $controllers = ['login', 'list'];
@@ -27,8 +27,7 @@ $nom_fichier = 'Controllers/' . $nom_classe . '.php';
 
 //Si le fichier existe et est accessible en lecture
 if (is_readable($nom_fichier)) {
-    //On l'inclut et on instancie un objet de cette classe
-    require_once $nom_fichier;
+    // on instancie un objet de cette classe
     new $nom_classe();
 } else {
     die("Error 404: not found!");
