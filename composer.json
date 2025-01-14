@@ -1,5 +1,6 @@
 {
-      "autoload": {
+ 
+    "autoload": {
         "psr-4": {
             "Chatapp\\": "app/Chatapp"
         }

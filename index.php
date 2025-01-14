@@ -2,10 +2,6 @@
 require_once 'app/start.php';
 require_once "app/Chatapp/Utils/functions.php";
 
-//Inclusion du modèle
-use Chatapp\Models;
-//Inclusion de la classe Controller
-use Chatapp\Controllers\Controller;
 
 //Liste des contrôleurs -- A RENSEIGNER
 $controllers = ['login', 'list'];
@@ -28,7 +24,7 @@ $nom_fichier = 'Controllers/' . $nom_classe . '.php';
 //Si le fichier existe et est accessible en lecture
 if (is_readable($nom_fichier)) {
     // on instancie un objet de cette classe
-    new $nom_classe();
+    new $nom_controller();
 } else {
     die("Error 404: not found!");
 }
