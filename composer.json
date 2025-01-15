@@ -2,7 +2,7 @@
  
     "autoload": {
         "psr-4": {
-            "Chatapp\\": "app/Chatapp"
+            "App\\": "src/"
         }
     },
     "require": {

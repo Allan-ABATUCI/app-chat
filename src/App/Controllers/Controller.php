@@ -1,5 +1,8 @@
 <?php
-require_once 'Models/Model.php';
+
+namespace App\Controllers;
+
+use App\Models\Model;
 
 abstract class Controller
 {
@@ -38,7 +41,7 @@ abstract class Controller
         extract($data);
 
         //On teste si la vue existe
-        $file_name = "Views/view_" . $vue . '.php';
+        $file_name = "src/App/Views/view_" . $vue . '.php';
         if (file_exists($file_name)) {
             //Si oui, on l'affiche
             include $file_name;
@@ -53,7 +56,7 @@ abstract class Controller
     /**
      * Méthode affichant une page d'erreur
      * @param string $message Message d'erreur à afficher
-     * @return aucun
+     * @return void
      */
     protected function action_error($message = '')
     {

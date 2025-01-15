@@ -1,5 +1,9 @@
 <?php
+
 namespace App\Controllers;
+
+use App\Models\Model;
+
 class Controller_login extends Controller
 {
 
@@ -9,6 +13,7 @@ class Controller_login extends Controller
     }
     public function action_form_login()
     {
+
         $this->render('login');
     }
     public function action_login()
