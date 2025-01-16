@@ -15,5 +15,20 @@
     <button onclick="sendMessage()">Send</button>
 </body>
 
+<script>
+    var conn = new WebSocket('ws://localhost:8081/chat');
+
+
+    conn.onopen = function(e) {
+        -
+        conn.send(JSON.stringify(
+
+        ));
+    };
+
+    conn.onmessage = function(e) {
+        console.log(e.data);
+    };
+</script>
 
 </html>

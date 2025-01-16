@@ -18,27 +18,19 @@ class Chat implements MessageComponentInterface
     {
         $this->clients->attach($conn, ['userId' => null]); // Attach connection without user ID initially
         echo "New connection! ({$conn->resourceId})\n";
+        if ($data['']) {
+        }
     }
 
     public function onMessage(ConnectionInterface $from, $msg)
     {
         $data = json_decode($msg, true);
 
-        if (!isset($data['action'])) {
-            $from->send(json_encode(['error' => 'Invalid message format']));
-            return;
-        }
-
-        switch ($data['action']) {
-            case 'initiate':
-                $this->handleInitiate($from, $data);
-                break;
-            case 'message':
-                $this->handleMessage($from, $data);
-                break;
-            default:
-                $from->send(json_encode(['error' => 'Unknown action']));
-        }
+        if ($data['ac'])
+            if (!isset($data['room'])) {
+                $from->send(json_encode(['error' => 'Invalid message format']));
+                return;
+            }
     }
 
     private function handleInitiate(ConnectionInterface $from, $data)

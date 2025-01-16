@@ -1,11 +1,9 @@
 <?php
 
 require_once 'vendor/autoload.php';
-ini_set('max_execution_time', 900);
-ini_set('memory_limit', '10G');
-ini_set('mysql.connect_timeout', 300);
-ini_set('default_socket_timeout', 300);
-ignore_user_abort(true);
+session_start();
+echo session_id();
+
 // Liste des contrôleurs -- A RENSEIGNER
 $controllers = ['login', 'list', 'chat'];
 // Nom du contrôleur par défaut -- A RENSEIGNER
