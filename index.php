@@ -2,7 +2,7 @@
 
 require_once 'vendor/autoload.php';
 session_start();
-echo session_id();
+
 
 // Liste des contrôleurs -- A RENSEIGNER
 $controllers = ['login', 'list', 'chat'];

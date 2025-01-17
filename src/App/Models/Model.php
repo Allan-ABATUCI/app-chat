@@ -1,5 +1,8 @@
 <?php
+
 namespace App\Models;
+
+use PDO;
 
 class Model
 {
@@ -18,10 +21,10 @@ class Model
      */
     private function __construct()
     {
-        include __DIR__ . "..\Auth\credentials.php";
+        include "src/App/Auth/credentials.php";
         $this->bd = new PDO($dsn, $login, $mdp);
         $this->bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->bd->query("SET nameS 'utf8'");
+        $this->bd->query("SET names 'utf8'");
     }
 
     /**
@@ -61,9 +64,13 @@ class Model
         $req->execute();
         return $req->fetch();
     }
-
-    public function getConversation()
+    public function UserExists($email)
     {
+        $req = $this->bd->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
+        $req->bindValue(':email', $email, PDO::PARAM_STR);
+        $req->execute();
+        return $req->fetchColumn() > 0;
     }
 
+    public function getConversation() {}
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\public\WebSocket;
 
 use Ratchet\App;

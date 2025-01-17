@@ -1,4 +1,4 @@
 <?php
-$dns = 'psql:';
-$login = 'appchat';
-$mdp = 'Laflemme';
+$dsn = 'psql:host=localhost;dbname=annote';
+$login = 'aln';
+$mdp = 'laflemme';

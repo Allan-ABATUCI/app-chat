@@ -11,80 +11,37 @@ class Chat implements MessageComponentInterface
 
     public function __construct()
     {
-        $this->clients = new \SplObjectStorage; // Stores connections with associated user IDs
+        $this->clients = new \SplObjectStorage;
     }
 
     public function onOpen(ConnectionInterface $conn)
     {
-        $this->clients->attach($conn, ['userId' => null]); // Attach connection without user ID initially
-        echo "New connection! ({$conn->resourceId})\n";
-        if ($data['']) {
-        }
+        $queryString = $conn->httpRequest->getUri()->getQuery();
+        parse_str($queryString, $queryParams);
+        $this->clients->attach($conn, $queryParams);
+        echo "New connection\n";
     }
-
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        $data = json_decode($msg, true);
-
-        if ($data['ac'])
-            if (!isset($data['room'])) {
-                $from->send(json_encode(['error' => 'Invalid message format']));
-                return;
-            }
-    }
-
-    private function handleInitiate(ConnectionInterface $from, $data)
-    {
-        if (!isset($data['targetUser'])) {
-            $from->send(json_encode(['error' => 'targetUser is required']));
-            return;
-        }
-
-        $from->userId = $data['targetUser']; // Assign the userId to the connection
-        echo "Connection {$from->resourceId} identified as user {$data['targetUser']}\n";
-
-        $from->send(json_encode(['status' => 'User ID set successfully']));
-    }
-
-    private function handleMessage(ConnectionInterface $from, $data)
-    {
-        if (!isset($data['targetUser']) || !isset($data['message'])) {
-            $from->send(json_encode(['error' => 'targetUser and message are required']));
-            return;
-        }
-
-        $targetUser = $data['targetUser'];
-        $message = $data['message'];
-
-        $recipient = null;
-
+        // Décoder le message JSON entrant
+        $message = json_decode($msg, true);
+        // Diffuser le message au destinataire spécifié
         foreach ($this->clients as $client) {
-            if ($this->clients[$client]['userId'] === $targetUser) {
-                $recipient = $client;
-                break;
+            if ($client !== $from && $this->clients[$client]['userId'] === $message['dest']) {
+                $client->send($message['message']);
             }
-        }
-
-        if ($recipient) {
-            $recipient->send(json_encode([
-                'from' => $from->userId,
-                'message' => $message
-            ]));
-            echo "Message from {$from->resourceId} to user {$targetUser}: {$message}\n";
-        } else {
-            $from->send(json_encode(['error' => 'Recipient not connected']));
         }
     }
 
     public function onClose(ConnectionInterface $conn)
     {
         $this->clients->detach($conn);
-        echo "Connection {$conn->resourceId} has disconnected\n";
+        echo "Connexion fermée\n";
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
-        echo "An error has occurred: {$e->getMessage()}\n";
+        echo "Erreur : {$e->getMessage()}\n";
         $conn->close();
     }
 }
