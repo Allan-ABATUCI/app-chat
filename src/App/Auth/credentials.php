@@ -1,4 +1,4 @@
 <?php
-$dsn = 'psql:host=localhost;dbname=annote';
+$dsn = 'pgsql:host=localhost;dbname=annote';
 $login = 'aln';
 $mdp = 'laflemme';

@@ -1,31 +1,99 @@
-<?php
-$dest = $_GET['dest'];
-?>
-
 <!DOCTYPE html>
-<html lang="fr">
-<!-- Structure HTML depuis ci-dessus -->
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test WebSocket Chat</title>
+    <title>Chat Annoté</title>
+    <style>
+        #chat-container {
+            width: 400px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        #message-area {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #eee;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            margin-bottom: 5px;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .message.mine {
+            background-color: #e0f2f7;
+            /* Bleu clair */
+            text-align: right;
+        }
+
+        .message.other {
+            background-color: #f0f0f0;
+            /* Gris clair */
+            text-align: left;
+        }
+
+        #input-area {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #emotion-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Test WebSocket Chat</h1>
+    <div id="chat-container">
+        <div id="message-area"></div>
+        <div id="input-area">
+            <textarea id="message-input" placeholder="Écrivez votre message..."></textarea>
+            <div id="emotion-buttons">
+                <button data-emotion="joie">Joie</button>
+                <button data-emotion="colère">Colère</button>
+                <button data-emotion="tristesse">Tristesse</button>
+            </div>
+            <button id="send-button">Envoyer</button>
+        </div>
+    </div>
+    <script>
+        const messageArea = document.getElementById('message-area');
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const emotionButtons = document.getElementById('emotion-buttons').querySelectorAll('button');
+        let selectedEmotion = null;
 
-    <!-- Affichage de l'ID du destinataire depuis le GET -->
-    <p id="recipientInfo">ID du destinataire : <?php echo $dest; ?></p>
+        emotionButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                selectedEmotion = button.dataset.emotion;
+            });
+        });
 
-    <!-- Journal de chat -->
-    <textarea id="log" cols="50" rows="10" readonly></textarea><br>
+        sendButton.addEventListener('click', () => {
+            const messageText = messageInput.value;
+            if (messageText.trim() === "" || selectedEmotion == null) return;
 
-    <!-- Champ de saisie pour le message -->
-    <input id="message" type="text" placeholder="Tapez votre message ici" required><br><br>
+            displayMessage(messageText, "mine", selectedEmotion);
+            messageInput.value = '';
+            selectedEmotion = null;
+        });
 
-    <button onclick="sendMessage()">Envoyer</button>
-
+        function displayMessage(message, sender, emotion) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(sender);
+            messageDiv.textContent = message + " (" + emotion + ")";
+            messageArea.appendChild(messageDiv);
+            messageArea.scrollTop = messageArea.scrollHeight;
+        }
+    </script>
     <script>
         // Vérifier si la page a reçu l'ID du destinataire via GET
         window.onload = function() {

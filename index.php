@@ -1,6 +1,7 @@
 <?php
 
 require_once 'vendor/autoload.php';
+require_once 'src/App/Utils/functions.php';
 session_start();
 
 
